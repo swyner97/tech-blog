@@ -1,21 +1,23 @@
 import express from 'express';
-import { engine } from 'express-handlebars';
+import exphbs from 'express-handlebars';
 import path from 'path';
 import session from 'express-session';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+
+const hbs = exphbs.create({});
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const PORT = process.env.PORT || 3003;
 
-app.engine('handlebars', engine());
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-app.set('views', './views');
+// app.set('views', './views');
 
 app.get('/', (req, res) => {
-    res.render('home');
+    res.render('login');
 });
 // const sequelize = require('./config/config');
 // const SequelizeStore = require('connect-session-sequelize')(session.Store);
