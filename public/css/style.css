@@ -23,7 +23,7 @@ main {
     background-color: rgba(0, 0, 0, 0.474);
     width: 50%;
     padding: 20px;
-    
+    margin: 25%;
 }
 
 textarea:focus, input:focus {
@@ -32,4 +32,9 @@ textarea:focus, input:focus {
 
 input, select, textarea{
     color: white;
+}
+
+h2 {
+    color: white;
+    font-size: 25px;
 }

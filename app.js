@@ -1,6 +1,7 @@
 import express from 'express';
 import exphbs from 'express-handlebars';
 import path from 'path';
+import { Sequelize } from 'sequelize';
 import session from 'express-session';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
