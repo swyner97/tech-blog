@@ -17,9 +17,7 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 // app.set('views', './views');
 
-app.get('/', (req, res) => {
-    res.render('login');
-});
+
 // const sequelize = require('./config/config');
 // const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
