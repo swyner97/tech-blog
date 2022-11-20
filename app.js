@@ -1,14 +1,11 @@
-import express from 'express';
-import exphbs from 'express-handlebars';
-import path from 'path';
-import { Sequelize } from 'sequelize';
-import session from 'express-session';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+const path = require('path');
+const express = require('express');
+const session = require('express-session');
+const exphbs = require('express-handlebars');
+const dotenv = require('dotenv').config()
+const helpers = require('./utils/helpers');
 
 const hbs = exphbs.create({});
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const PORT = process.env.PORT || 3003;
@@ -18,7 +15,8 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 
-import sequelize from './config/config.js';
+const sequelize = require('./config/config');
+
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const sess = {
