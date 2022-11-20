@@ -1,16 +1,18 @@
 const router = require('express').Router();
-const { Post } = require('../../models/');
+const { Comment } = require('../../models/');
 const withAuth = require('../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
-    const body = req.body;
-    setences = body.split('. ');
+  try {
+    const newComment = await Comment.create({
+      ...req.body,
+      userId: req.session.userId,
+    });
+    res.json(newComment);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-    Comment.create({ body: joinArr, useId: req.session.userId, postId: req.body.postId })
-    .then(commentNewPost => {
-        res.json(commentNewPOst)
-    })
-})
+module.exports = router;
 
-
-module.exports = router
