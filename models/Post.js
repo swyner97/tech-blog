@@ -4,22 +4,36 @@ const { Model, Datatypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // Initialize Post model (table) by entending off Sequelize's Model class
-class Post extends Model {}
+class Post extends Model { }
 
 // set up fields and rules for Post model
-Post.init( 
+Post.init(
     {
         id: {
-            type: Datatypes.INTEGRER, 
-            allowNull: false, 
-            primaryKey: true, 
+            type: Datatypes.INTEGRER,
+            allowNull: false,
+            primaryKey: true,
             autoIncrement: true
-        }, 
-        Post: {
-            type: Datatypes.STRING, 
+        },
+        post: {
+            type: Datatypes.STRING,
             allowNull: false
-        }
-  
-});
+        },
+        user_id: {
+            type: Datatypes.INTEGRER,
+            references: {
+                model: 'user',
+                key: 'id'
+            },
+        },
+    },
+    {
+        sequelize,
+        timestamps: false,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'product_tag',
+    }
+);
 
 module.exports = Post;
