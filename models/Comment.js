@@ -1,7 +1,7 @@
 // import important parts of the sequelize library
 const { Model, Datatypes } = require('sequelize');
 // import our database connection from config.js
-const sequelize = require('../config/connection');
+const sequelize = require('../config/config');
 
 // Initialize Comment model (table) by entending off Sequelize's Model class
 class Comment extends Model { }

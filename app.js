@@ -15,30 +15,28 @@ const PORT = process.env.PORT || 3003;
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-// app.set('views', './views');
+app.set('views', './views');
 
 
-// const sequelize = require('./config/config');
-// const SequelizeStore = require('connect-session-sequelize')(session.Store);
+import sequelize from './config/config.js';
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-// const sess = {
-//   secret: process.env.SECRET,
-//   cookie: {
-//     maxAge: 1000 * 60 * 60 * 24, // last one day
-//     httpOnly: true,
-//     secure: false,
-//     sameSite: 'strict',
-//   },
-//   resave: false,
-//   saveUninitialized: true,
-//   store: new SequelizeStore({
-//     db: sequelize
-//   })
-// };
+const sess = {
+  secret: process.env.SECRET,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // last one day
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize
+  })
+};
 
-// app.use(session(sess));
-
-// const hbs = exphbs.create({ helpers });
+app.use(session(sess));
 
 // app.exphbs('handlebars', hbs.exphbs);
 app.set('view exphbs', 'handlebars');
