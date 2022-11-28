@@ -1,12 +1,6 @@
 const router = require('express').Router();
-const { Post } = require('../../models/')
-
-// THEN I am taken to the homepage and presented with existing blog posts that include the post title and the date created
-// WHEN I click on an existing blog post
-// THEN I am presented with the post title, contents, post creator’s username, and date created for that post and have the option to leave a comment
-// WHEN I enter a comment and click on the submit button while signed in
-// THEN the comment is saved and the post is updated to display the comment, the comment creator’s username, and the date created
-
+const { Post } = require('../../models/');
+const { findByPk } = require('../../models/User');
 
 // post a post
 router.post('/', async (req, res) => {
@@ -21,7 +15,7 @@ router.post('/', async (req, res) => {
 })
 
 // get all posts
-router.get('/dashboard/posts', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const allPosts = await Post.findAll();
         res.json(allPosts)
@@ -30,5 +24,68 @@ router.get('/dashboard/posts', async (req, res) => {
     }
 })
 
-// show single post
+router.put('/:id', async (req, res) => {
+    try {
+        const [affectedRows] = await Post.update(req.body, {
+            where: {
+                id: req.params.id,
+            },
+        });
+
+        if (affectedRows > 0) {
+            res.status(200).end();
+        } else {
+            res.status(404).end();
+        }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// get single post
+router.get('/post/:id', async (req, res) => {
+    try {
+      const postData = await Post.findByPk(req.params.id, {
+        include: [
+          User,
+          {
+            model: Comment,
+            include: [User],
+          },
+        ],
+      });
+  
+      if (postData) {
+        const post = postData.get({ plain: true });
+  
+        res.render('single-post', { post });
+      } else {
+        res.status(404).end();
+      }
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+  
+
+// delete post 
+router.delete('/:id', async (req, res) => {
+    try {
+        const [affectedRows] = Post.destroy({
+            where: {
+                id: req.params.id,
+            },
+        });
+
+        if (affectedRows > 0) {
+            res.status(200).end();
+        } else {
+            res.status(404).end();
+        }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+
+})
+
 module.exports = router;
